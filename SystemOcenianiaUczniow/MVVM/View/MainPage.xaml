@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:SystemOcenianiaUczniow.MVVM.ViewModel"
+             x:Class="SystemOcenianiaUczniow.MainPage">
+
+
+    <ContentPage.BindingContext>
+        <viewModel:UczniowieViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+        <ListView ItemsSource="{Binding Uczniowie}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout Spacing="20">
+                            <Label Text="{Binding Imie}" />
+                            <Label Text="{Binding Nazwisko}" />
+                            <Label Text="{Binding Klasa}" />
+                            <ListView ItemsSource="{Binding Oceny}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout>
+                                                <Label Text="{Binding Przedmiot}" />
+                                                <Label Text="{Binding Wartosc}" />
+                                                <Label Text="{Binding Komentarz}" />
+                                                <Label Text="{Binding Data, StringFormat='{0:dd.MM.yyyy}'}" />
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
