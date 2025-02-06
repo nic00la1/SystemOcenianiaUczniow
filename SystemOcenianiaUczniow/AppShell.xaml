@@ -8,8 +8,9 @@
     Title="SystemOcenianiaUczniow">
 
     <ShellContent
-        Title="Home"
+        Title="Uczniowie"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
 
 </Shell>

@@ -1,41 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModel="clr-namespace:SystemOcenianiaUczniow.MVVM.ViewModel"
+             xmlns:vm="clr-namespace:SystemOcenianiaUczniow.MVVM.ViewModel"
              x:Class="SystemOcenianiaUczniow.MainPage">
 
-
     <ContentPage.BindingContext>
-        <viewModel:UczniowieViewModel />
+        <vm:UczenViewModel />
     </ContentPage.BindingContext>
 
-    <StackLayout>
-        <ListView ItemsSource="{Binding Uczniowie}">
+    <StackLayout Padding="10">
+        <ListView ItemsSource="{Binding Uczniowie}" SelectedItem="{Binding WybranyUczen}" ItemTapped="OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <HorizontalStackLayout Spacing="20">
-                            <Label Text="{Binding Imie}" />
-                            <Label Text="{Binding Nazwisko}" />
-                            <Label Text="{Binding Klasa}" />
-                            <ListView ItemsSource="{Binding Oceny}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <StackLayout>
-                                                <Label Text="{Binding Przedmiot}" />
-                                                <Label Text="{Binding Wartosc}" />
-                                                <Label Text="{Binding Komentarz}" />
-                                                <Label Text="{Binding Data, StringFormat='{0:dd.MM.yyyy}'}" />
-                                            </StackLayout>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </HorizontalStackLayout>
+                        <Frame Margin="5" Padding="10" BorderColor="LightGray" CornerRadius="10">
+                            <StackLayout>
+                                <Label Text="{Binding Imie}" FontAttributes="Bold" FontSize="Medium" />
+                                <Label Text="{Binding Nazwisko}" FontSize="Small" />
+                            </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <StackLayout IsVisible="{Binding WybranyUczen}" Padding="10">
+            <Frame Margin="5" Padding="10" BorderColor="LightGray" CornerRadius="10">
+                <StackLayout>
+                    <Label Text="{Binding WybranyUczen.Imie}" FontAttributes="Bold" FontSize="Large" />
+                    <Label Text="{Binding WybranyUczen.Nazwisko}" FontSize="Medium" />
+
+                    <!-- Formularz dodawania oceny -->
+                    <Entry Placeholder="Przedmiot" Text="{Binding NowaOcena.Przedmiot}" />
+                    <Entry Placeholder="Wartość" Keyboard="Numeric" Text="{Binding NowaOcena.Wartosc}" />
+                    <Entry Placeholder="Komentarz" Text="{Binding NowaOcena.Komentarz}" />
+                    <DatePicker Date="{Binding NowaOcena.Data}" />
+
+                    <Button Text="Dodaj ocenę" Command="{Binding DodajOceneCommand}" CommandParameter="{Binding NowaOcena}" />
+                    <Button Text="Oblicz średnią" Command="{Binding ObliczSredniaCommand}" />
+
+                    <!-- Wyświetlanie średniej oceny -->
+                    <Label Text="Średnia ocena:" FontAttributes="Bold" FontSize="Medium" />
+                    <Label Text="{Binding SredniaOcena}" FontSize="Medium" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

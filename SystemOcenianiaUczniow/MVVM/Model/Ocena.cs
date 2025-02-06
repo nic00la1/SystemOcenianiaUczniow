@@ -11,6 +11,6 @@ namespace SystemOcenianiaUczniow.MVVM.Model
         public string Przedmiot { get; set; }
         public double Wartosc { get; set; }
         public string Komentarz { get; set; }
-        public string Data { get; set; }
+        public DateTime Data { get; set; }
     }
 }
