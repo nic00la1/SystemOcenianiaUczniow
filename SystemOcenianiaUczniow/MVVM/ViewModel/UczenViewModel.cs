@@ -40,9 +40,19 @@ namespace SystemOcenianiaUczniow.MVVM.ViewModel
         public UczenViewModel()
         {
             // Przyk³adowe dane
-            Uczniowie.Add(new Uczen { Imie = "Jan", Nazwisko = "Kowalski" });
-            Uczniowie.Add(new Uczen { Imie = "Anna", Nazwisko = "Nowak" });
-            Uczniowie.Add(new Uczen { Imie = "Piotr", Nazwisko = "Wiœniewski" });
+            var uczen1 = new Uczen { Imie = "Jan", Nazwisko = "Kowalski", Przedmiot = "Matematyka" };
+            uczen1.Oceny.Add(new Ocena { Przedmiot = "Matematyka", Wartosc = 5, Komentarz = "Bardzo dobrze", Data = DateTime.Now });
+            uczen1.Oceny.Add(new Ocena { Przedmiot = "Matematyka", Wartosc = 4, Komentarz = "Dobrze", Data = DateTime.Now });
+
+            var uczen2 = new Uczen { Imie = "Anna", Nazwisko = "Nowak", Przedmiot = "Fizyka" };
+            uczen2.Oceny.Add(new Ocena { Przedmiot = "Fizyka", Wartosc = 3, Komentarz = "Œrednio", Data = DateTime.Now });
+
+            var uczen3 = new Uczen { Imie = "Piotr", Nazwisko = "Wiœniewski", Przedmiot = "Chemia" };
+            uczen3.Oceny.Add(new Ocena { Przedmiot = "Chemia", Wartosc = 2, Komentarz = "S³abo", Data = DateTime.Now });
+
+            Uczniowie.Add(uczen1);
+            Uczniowie.Add(uczen2);
+            Uczniowie.Add(uczen3);
 
             WyswietlUczniaCommand = new RelayCommand<Uczen>(WyswietlUcznia);
             DodajOceneCommand = new RelayCommand<Ocena>(DodajOcene);
@@ -52,12 +62,14 @@ namespace SystemOcenianiaUczniow.MVVM.ViewModel
         private void WyswietlUcznia(Uczen uczen)
         {
             WybranyUczen = uczen;
+            NowaOcena.Przedmiot = uczen.Przedmiot; // Ustawienie przedmiotu dla nowej oceny
         }
 
         private void DodajOcene(Ocena ocena)
         {
             if (WybranyUczen != null && ocena != null)
             {
+                ocena.Przedmiot = WybranyUczen.Przedmiot; // Przypisanie przedmiotu do oceny
                 WybranyUczen.Oceny.Add(ocena);
                 NowaOcena = new Ocena { Data = DateTime.Now }; // Resetowanie formularza
             }

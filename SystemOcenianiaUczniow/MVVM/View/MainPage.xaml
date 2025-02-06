@@ -9,7 +9,7 @@
     </ContentPage.BindingContext>
 
     <StackLayout Padding="10">
-        <ListView ItemsSource="{Binding Uczniowie}" SelectedItem="{Binding WybranyUczen}" ItemTapped="OnItemTapped">
+        <ListView ItemsSource="{Binding Uczniowie}" SelectedItem="{Binding WybranyUczen, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -17,6 +17,7 @@
                             <StackLayout>
                                 <Label Text="{Binding Imie}" FontAttributes="Bold" FontSize="Medium" />
                                 <Label Text="{Binding Nazwisko}" FontSize="Small" />
+                                <Button Text="Wyświetl dane" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UczenViewModel}}, Path=WyswietlUczniaCommand}" CommandParameter="{Binding}" />
                             </StackLayout>
                         </Frame>
                     </ViewCell>
@@ -29,9 +30,25 @@
                 <StackLayout>
                     <Label Text="{Binding WybranyUczen.Imie}" FontAttributes="Bold" FontSize="Large" />
                     <Label Text="{Binding WybranyUczen.Nazwisko}" FontSize="Medium" />
+                    <Label Text="{Binding WybranyUczen.Przedmiot}" FontSize="Medium" />
+
+                    <!-- Lista ocen -->
+                    <ListView ItemsSource="{Binding WybranyUczen.Oceny}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal" Padding="5">
+                                        <Label Text="{Binding Wartosc}" FontAttributes="Bold" FontSize="Medium" />
+                                        <Label Text="{Binding Komentarz}" FontSize="Small" Margin="10,0,0,0" />
+                                        <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}" FontSize="Small" Margin="10,0,0,0" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
                     <!-- Formularz dodawania oceny -->
-                    <Entry Placeholder="Przedmiot" Text="{Binding NowaOcena.Przedmiot}" />
+                    <Entry Placeholder="Przedmiot" Text="{Binding NowaOcena.Przedmiot}" IsEnabled="False" />
                     <Entry Placeholder="Wartość" Keyboard="Numeric" Text="{Binding NowaOcena.Wartosc}" />
                     <Entry Placeholder="Komentarz" Text="{Binding NowaOcena.Komentarz}" />
                     <DatePicker Date="{Binding NowaOcena.Data}" />

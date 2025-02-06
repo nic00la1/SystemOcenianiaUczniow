@@ -10,6 +10,7 @@ namespace SystemOcenianiaUczniow.MVVM.Model
     {
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
+        public string Przedmiot { get; set; }
         public List<Ocena> Oceny { get; set; } = new List<Ocena>();
 
         public double ObliczSrednia()
